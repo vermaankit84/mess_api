@@ -55,14 +55,14 @@ public class BufferController {
     public
     @ResponseBody
     ResponseEntity<List<Buffer>> getBufferDetails() {
-        return new ResponseEntity<List<Buffer>>(bufferService.getBufferDetails(), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(bufferService.getBufferDetails(), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/getBufferDetails/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public
     @ResponseBody
     ResponseEntity<Buffer> getBufferDetails(@PathVariable final int id) {
-        return new ResponseEntity<Buffer>(bufferService.getBufferDetails(id), HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(bufferService.getBufferDetails(id), HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/deleteBuffer/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.DELETE)
