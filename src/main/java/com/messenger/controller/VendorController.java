@@ -76,6 +76,6 @@ public class VendorController {
     public
     @ResponseBody
     ResponseEntity<Vendor> getVendorDetails(@PathVariable final int id) {
-        return new ResponseEntity<Vendor>(vendorService.getVendorDetails(id), HttpStatus.FOUND);
+        return new ResponseEntity<>(vendorService.getVendorDetails(id), HttpStatus.FOUND);
     }
 }
