@@ -70,6 +70,6 @@ public class BufferController {
     @ResponseBody
     ResponseEntity<String> deleteBuffer(@PathVariable final int id) {
         bufferService.deleteBuffer(id);
-        return new ResponseEntity<String>("Buffer with id [ " + id + " ] has been deleted successfully ", HttpStatus.ACCEPTED);
+        return new ResponseEntity<>("Buffer with id [ " + id + " ] has been deleted successfully ", HttpStatus.ACCEPTED);
     }
 }

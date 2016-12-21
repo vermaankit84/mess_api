@@ -69,6 +69,6 @@ public class DivisionController {
     @ResponseBody
     ResponseEntity<String> deleteDivision(@PathVariable String id) {
         divisionService.deleteDivision(id);
-        return new ResponseEntity<String>("This division " + id + " has been deleted successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>("This division " + id + " has been deleted successfully", HttpStatus.CREATED);
     }
 }

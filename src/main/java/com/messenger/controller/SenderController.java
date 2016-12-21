@@ -62,7 +62,7 @@ public class SenderController {
     @ResponseBody
     ResponseEntity<String> deleteSender(@PathVariable int id) {
         senderService.delete(id);
-        return new ResponseEntity<String>("This Sender " + id + " has been deleted successfully", HttpStatus.CREATED);
+        return new ResponseEntity<>("This Sender " + id + " has been deleted successfully", HttpStatus.CREATED);
     }
 
 }

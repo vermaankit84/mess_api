@@ -64,7 +64,7 @@ public class VendorController {
         ResponseEntity<String> responseEntity = null;
         try {
             vendorService.delete(id);
-            responseEntity = new ResponseEntity<String>("Vendor with id [ " + id + " ] deleted successfully", HttpStatus.CREATED);
+            responseEntity = new ResponseEntity<>("Vendor with id [ " + id + " ] deleted successfully", HttpStatus.CREATED);
         } catch (Exception e) {
             responseEntity = new ResponseEntity<String>("exception arises while delete Vendor [ " + id + " ] exception details [" + e + " ] ", HttpStatus.BAD_REQUEST);
             logger.warn("exception arises while delete Vendor [ " + id + " ] ", e);
