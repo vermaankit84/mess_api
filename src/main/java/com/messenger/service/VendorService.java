@@ -21,8 +21,8 @@ public class VendorService {
     @Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class, timeout = 30)
     public Vendor createVendor(final Vendor vendor) throws Exception {
         final Vendor v = vendorRepository.save(vendor);
-        Utilities.refresh(System.getenv("receiver_vendor_urls").split(","));
-        Utilities.refresh(System.getenv("sender_vendor_urls").split(","));
+        Utilities.refresh(System.getProperty("receiver_vendor_urls").split(","));
+        Utilities.refresh(System.getProperty("sender_vendor_urls").split(","));
         return v;
     }
 
@@ -38,8 +38,8 @@ public class VendorService {
         v.setVendorHeader(StringUtils.isNotEmpty(vendor.getVendorHeader()) ? vendor.getVendorHeader() : v.getVendorHeader());
         v.setVendorCredentials(StringUtils.isNotEmpty(vendor.getVendorCredentials()) ? vendor.getVendorCredentials() : v.getVendorCredentials());
         vendorRepository.saveAndFlush(v);
-        Utilities.refresh(System.getenv("receiver_vendor_urls").split(","));
-        Utilities.refresh(System.getenv("sender_vendor_urls").split(","));
+        Utilities.refresh(System.getProperty("receiver_vendor_urls").split(","));
+        Utilities.refresh(System.getProperty("sender_vendor_urls").split(","));
     }
 
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
@@ -50,8 +50,8 @@ public class VendorService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void delete(int id) throws Exception {
         vendorRepository.delete(id);
-        Utilities.refresh(System.getenv("receiver_vendor_urls").split(","));
-        Utilities.refresh(System.getenv("sender_vendor_urls").split(","));
+        Utilities.refresh(System.getProperty("receiver_vendor_urls").split(","));
+        Utilities.refresh(System.getProperty("sender_vendor_urls").split(","));
     }
 
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)

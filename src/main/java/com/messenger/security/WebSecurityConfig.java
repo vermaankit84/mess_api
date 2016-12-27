@@ -25,11 +25,25 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     public void configure(final HttpSecurity http) throws Exception {
-        http.httpBasic().and().authorizeRequests().antMatchers(HttpMethod.POST, "/create*").hasRole(UserType.ADMIN.name())
-                .and().authorizeRequests().antMatchers(HttpMethod.PUT, "/update*").hasRole(UserType.ADMIN.name())
-                .and().authorizeRequests().antMatchers(HttpMethod.GET, "/get*").permitAll().and()
-                .authorizeRequests().antMatchers(HttpMethod.PUT, "/update*").hasRole(UserType.WRITE.name())
-                .and().authorizeRequests().antMatchers(HttpMethod.PUT, "/delete*").hasRole(UserType.WRITE.name())
+        http.httpBasic()
+                .and().authorizeRequests().antMatchers(HttpMethod.POST, "/createBuffer").hasRole(UserType.WRITE.name())
+                .and().authorizeRequests().antMatchers(HttpMethod.PUT, "/updateBuffer").hasRole(UserType.WRITE.name())
+                .and().authorizeRequests().antMatchers(HttpMethod.DELETE, "/deleteBuffer").hasRole(UserType.WRITE.name())
+                .and().authorizeRequests().antMatchers(HttpMethod.POST, "/createDivision").hasRole(UserType.WRITE.name())
+                .and().authorizeRequests().antMatchers(HttpMethod.PUT, "/updateDivision").hasRole(UserType.WRITE.name())
+                .and().authorizeRequests().antMatchers(HttpMethod.DELETE, "/deleteDivision").hasRole(UserType.WRITE.name())
+                .and().authorizeRequests().antMatchers(HttpMethod.POST, "/createSender").hasRole(UserType.WRITE.name())
+                .and().authorizeRequests().antMatchers(HttpMethod.PUT, "/updateSender").hasRole(UserType.WRITE.name())
+                .and().authorizeRequests().antMatchers(HttpMethod.DELETE, "/deleteSender").hasRole(UserType.WRITE.name())
+                .and().authorizeRequests().antMatchers(HttpMethod.POST, "/createTemplate").hasRole(UserType.WRITE.name())
+                .and().authorizeRequests().antMatchers(HttpMethod.PUT, "/updateTemplate").hasRole(UserType.WRITE.name())
+                .and().authorizeRequests().antMatchers(HttpMethod.DELETE, "/deleteTemplate").hasRole(UserType.WRITE.name())
+                .and().authorizeRequests().antMatchers(HttpMethod.POST, "/createVendor").hasRole(UserType.WRITE.name())
+                .and().authorizeRequests().antMatchers(HttpMethod.PUT, "/updateVendor").hasRole(UserType.WRITE.name())
+                .and().authorizeRequests().antMatchers(HttpMethod.DELETE, "/deleteVendors").hasRole(UserType.WRITE.name())
+                .and().authorizeRequests().antMatchers(HttpMethod.GET, "/get*").permitAll()
+                .and().authorizeRequests().antMatchers(HttpMethod.POST, "/createUser").permitAll()
+                .and().authorizeRequests().antMatchers(HttpMethod.PUT, "/updateUser").hasRole(UserType.WRITE.name())
                 .and().csrf().disable();
     }
 

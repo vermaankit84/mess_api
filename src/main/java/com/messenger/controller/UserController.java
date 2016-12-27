@@ -19,6 +19,7 @@ public class UserController {
     @Autowired
     private UserService userService = null;
 
+
     @RequestMapping(value = "/createUser", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public
     @ResponseBody
@@ -38,7 +39,7 @@ public class UserController {
     public
     @ResponseBody
     ResponseEntity<String> updateUser(@RequestBody final UserDetails userDetails) {
-        logger.info("Template details obtained for update [ " + userDetails + " ] at [ " + Utilities.getLocalDateTime() + " ] ");
+        logger.info("Update details obtained for update [ " + userDetails + " ] at [ " + Utilities.getLocalDateTime() + " ] ");
         ResponseEntity<String> responseEntity = null;
         try {
             userService.updateTemplate(userDetails);
