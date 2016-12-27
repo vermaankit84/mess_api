@@ -64,4 +64,12 @@ public class ReportingController {
         logger.info("GetReport Details [ " + start + " ] end [ " + end + " ] at [ " + Utilities.getLocalDateTime() + " ] ");
         return new ResponseEntity<>(reportingService.getReportingData(start, end), HttpStatus.FOUND);
     }
+
+    @RequestMapping(value = "/getReportDetails/{start}/{end}/{mobile}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
+    public
+    @ResponseBody
+    ResponseEntity<List<ReportingData>> getReportDetails(@PathVariable final int start, @PathVariable final int end, @PathVariable final String mobile) {
+        logger.info("GetReport Details [ " + start + " ] end [ " + end + " ] phoneNumber [ " + mobile + " ] at [ " + Utilities.getLocalDateTime() + " ] ");
+        return new ResponseEntity<>(reportingService.getReportingData(start, end, mobile), HttpStatus.FOUND);
+    }
 }

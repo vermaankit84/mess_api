@@ -2,6 +2,7 @@ package com.messenger.service;
 
 import com.messenger.bean.Vendor;
 import com.messenger.repository.VendorRepository;
+import com.messenger.util.Utilities;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,10 @@ public class VendorService {
 
     @Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class, timeout = 30)
     public Vendor createVendor(final Vendor vendor) throws Exception {
-        return vendorRepository.save(vendor);
+        final Vendor v = vendorRepository.save(vendor);
+        Utilities.refresh(System.getenv("receiver_vendor_urls").split(","));
+        Utilities.refresh(System.getenv("sender_vendor_urls").split(","));
+        return v;
     }
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = Exception.class, timeout = 30)
@@ -34,6 +38,8 @@ public class VendorService {
         v.setVendorHeader(StringUtils.isNotEmpty(vendor.getVendorHeader()) ? vendor.getVendorHeader() : v.getVendorHeader());
         v.setVendorCredentials(StringUtils.isNotEmpty(vendor.getVendorCredentials()) ? vendor.getVendorCredentials() : v.getVendorCredentials());
         vendorRepository.saveAndFlush(v);
+        Utilities.refresh(System.getenv("receiver_vendor_urls").split(","));
+        Utilities.refresh(System.getenv("sender_vendor_urls").split(","));
     }
 
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
@@ -44,6 +50,8 @@ public class VendorService {
     @Transactional(propagation = Propagation.REQUIRED)
     public void delete(int id) throws Exception {
         vendorRepository.delete(id);
+        Utilities.refresh(System.getenv("receiver_vendor_urls").split(","));
+        Utilities.refresh(System.getenv("sender_vendor_urls").split(","));
     }
 
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)

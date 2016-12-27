@@ -2,7 +2,9 @@ package com.messenger.service;
 
 import com.messenger.bean.Template;
 import com.messenger.repository.TemplateRepository;
+import com.messenger.util.Utilities;
 import org.apache.commons.lang3.StringUtils;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -12,6 +14,7 @@ import java.util.List;
 
 @Service("templateService")
 public class TemplateService {
+    private final Logger logger = Logger.getLogger(TemplateService.class.getName());
     @Autowired
     private TemplateRepository templateRepository = null;
 
@@ -32,16 +35,23 @@ public class TemplateService {
         t.setTemplateDetails(StringUtils.isNotBlank(template.getTemplateDetails()) ? template.getTemplateDetails() : t.getTemplateDetails());
         t.setTemplateActive(template.getTemplateActive() != 0 ? template.getTemplateActive() : t.getTemplateActive());
         templateRepository.saveAndFlush(t);
+        Utilities.refresh(System.getProperty("receiver_template_urls").split(","));
+        Utilities.refresh(System.getProperty("sender_template_urls").split(","));
     }
 
     @Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class, timeout = 30)
     public Template createTemplate(final Template template) {
-        return templateRepository.saveAndFlush(template);
+        final Template t = templateRepository.saveAndFlush(template);
+        Utilities.refresh(System.getProperty("receiver_template_urls").split(","));
+        Utilities.refresh(System.getProperty("sender_template_urls").split(","));
+        return t;
     }
 
     @Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class, timeout = 30)
     public void delete(final int id) {
         templateRepository.delete(id);
+        Utilities.refresh(System.getProperty("receiver_template_urls").split(","));
+        Utilities.refresh(System.getProperty("sender_template_urls").split(","));
     }
 
 }
