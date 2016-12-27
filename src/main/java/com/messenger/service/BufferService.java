@@ -52,7 +52,7 @@ public class BufferService {
     @Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class, timeout = 30)
     @Cacheable(cacheNames = CacheConstants.STR_BUFFER_CACHE_CONSTANTS)
     public List<Buffer> getBufferDetails() {
-        return bufferRepository.findAll().parallelStream().filter(buffer -> buffer.getBufferStatus().equalsIgnoreCase("1")).collect(Collectors.toList());
+        return bufferRepository.findAll().parallelStream().filter(buffer -> "1".equalsIgnoreCase(buffer.getBufferStatus())).collect(Collectors.toList());
     }
 
     @Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class, timeout = 30)
