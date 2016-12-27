@@ -20,7 +20,6 @@ public class UserService {
     @Autowired
     private UserRepository userRepository = null;
 
-
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true, timeout = 30)
     @Cacheable(cacheNames = CacheConstants.STR_USER_CACHE_CONSTANTS)
     public List<UserDetails> getUserDetails() {
