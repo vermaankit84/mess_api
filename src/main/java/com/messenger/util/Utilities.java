@@ -8,6 +8,7 @@ import java.time.format.DateTimeFormatter;
 
 public final class Utilities {
     private static final Logger logger = Logger.getLogger(Utilities.class.getName());
+
     private Utilities() {
     }
 

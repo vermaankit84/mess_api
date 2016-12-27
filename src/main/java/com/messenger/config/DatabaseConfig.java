@@ -43,12 +43,17 @@ public class DatabaseConfig {
         entityManagerFactory.setDataSource(dataSource);
         entityManagerFactory.setPersistenceUnitName("messenger");
         entityManagerFactory.setPackagesToScan(env.getProperty("entitymanager.packagesToScan"));
-        HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
+        final HibernateJpaVendorAdapter vendorAdapter = new HibernateJpaVendorAdapter();
         entityManagerFactory.setJpaVendorAdapter(vendorAdapter);
         final Properties properties = new Properties();
         properties.put("hibernate.dialect", env.getProperty("hibernate.dialect"));
         properties.put("hibernate.show_sql", env.getProperty("hibernate.show_sql"));
+        properties.put("hibernate.format_sql", env.getProperty("hibernate.show_sql"));
+        properties.put("hibernate.format_sql", env.getProperty("hibernate.show_sql"));
         properties.put("hibernate.hbm2ddl.auto", env.getProperty("hibernate.hbm2ddl.auto"));
+        properties.put("hibernate.jdbc.batch_size", "100");
+        properties.put("hibernate.order_inserts", "true");
+        properties.put("hibernate.order_updates", "true");
         entityManagerFactory.setJpaProperties(properties);
         return entityManagerFactory;
     }
