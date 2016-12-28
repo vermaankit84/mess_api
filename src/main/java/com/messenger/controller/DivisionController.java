@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Set;
 
 @RestController
 public class DivisionController {
@@ -42,9 +43,9 @@ public class DivisionController {
         ResponseEntity<String> responseEntity = null;
         try {
             divisionService.updateDivision(division);
-            responseEntity = new ResponseEntity<String>("Division will has been updated with [ " + division.getDivisionName() + " ] ", HttpStatus.ACCEPTED);
+            responseEntity = new ResponseEntity<>("Division will has been updated with [ " + division.getDivisionName() + " ] ", HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            responseEntity = new ResponseEntity<String>("exception arises while saving Division [ " + division + " ] exception details [" + e + " ] ", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>("exception arises while saving Division [ " + division + " ] exception details [" + e + " ] ", HttpStatus.BAD_REQUEST);
             logger.warn("exception arises while saving Vendor [ " + division + " ] ", e);
         }
         return responseEntity;
@@ -54,14 +55,14 @@ public class DivisionController {
     public
     @ResponseBody
     ResponseEntity<List<Division>> getDivisionDetails() {
-        return new ResponseEntity<List<Division>>(divisionService.getDivision(), HttpStatus.CREATED);
+        return new ResponseEntity<>(divisionService.getDivision(), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/getDivisionDetails/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
     public
     @ResponseBody
     ResponseEntity<Division> getDivisionDetails(@PathVariable String id) {
-        return new ResponseEntity<Division>(divisionService.getDivision(id), HttpStatus.CREATED);
+        return new ResponseEntity<>(divisionService.getDivision(id), HttpStatus.CREATED);
     }
 
     @RequestMapping(value = "/deleteDivision/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
@@ -70,5 +71,13 @@ public class DivisionController {
     ResponseEntity<String> deleteDivision(@PathVariable String id) {
         divisionService.deleteDivision(id);
         return new ResponseEntity<>("This division " + id + " has been deleted successfully", HttpStatus.CREATED);
+    }
+
+    @RequestMapping(value = "/updateDivisionVendorMapping/{divisionId}", params = "vendorNameList", method = RequestMethod.PUT)
+    public
+    @ResponseBody
+    ResponseEntity<String> updateDivisionVendorMapping(@PathVariable final String divisionId, @RequestParam final Set<Integer> vendorNameList) {
+        divisionService.updateDivisionVendorMapping(divisionId, vendorNameList);
+        return new ResponseEntity<>("Division [" + divisionId + " ] has been updated for vendor name list [ " + vendorNameList + " ] successfully", HttpStatus.ACCEPTED);
     }
 }

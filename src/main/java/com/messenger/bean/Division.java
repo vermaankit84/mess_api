@@ -3,11 +3,10 @@ package com.messenger.bean;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.messenger.constants.TableConstants;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 
 @JsonAutoDetect
@@ -21,6 +20,13 @@ public class Division implements Serializable {
     @Column(name = "DIVISIONPASSWORD", nullable = false, length = 45)
     private String divisionPassword = null;
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "mess_division_vendor_mapper", joinColumns = {
+            @JoinColumn(name = "DIVISIONNAME")
+    }, inverseJoinColumns = {
+            @JoinColumn(name = "VENDORID")
+    })
+    private Set<Vendor> vendorSet = new HashSet<>();
 
     public String getDivisionName() {
         return divisionName;
@@ -38,8 +44,21 @@ public class Division implements Serializable {
         this.divisionPassword = divisionPassword;
     }
 
+
+    public Set<Vendor> getVendorSet() {
+        return vendorSet;
+    }
+
+    public void setVendorSet(Set<Vendor> vendorSet) {
+        this.vendorSet = vendorSet;
+    }
+
     @Override
     public String toString() {
-        return "Division{" + "divisionName='" + divisionName + '\'' + ", divisionPassword='" + divisionPassword + '}';
+        return "Division{" +
+                "divisionName='" + divisionName + '\'' +
+                ", divisionPassword='" + divisionPassword + '\'' +
+                ", vendorSet=" + vendorSet +
+                '}';
     }
 }

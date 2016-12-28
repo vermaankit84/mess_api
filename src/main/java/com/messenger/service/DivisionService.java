@@ -1,9 +1,11 @@
 package com.messenger.service;
 
 import com.messenger.bean.Division;
+import com.messenger.bean.Vendor;
 import com.messenger.constants.CacheConstants;
 import com.messenger.property.Config;
 import com.messenger.repository.DivisionRepository;
+import com.messenger.repository.VendorRepository;
 import com.messenger.util.Utilities;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -15,13 +17,18 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service("divisionService")
 public class DivisionService {
     private final Logger logger = Logger.getLogger(DivisionService.class.getName());
     @Autowired
     private DivisionRepository divisionRepository;
+
+    @Autowired
+    private VendorRepository vendorRepository;
 
     @Autowired
     private Config config = null;
@@ -65,5 +72,19 @@ public class DivisionService {
     public void deleteDivision(final String divisionId) {
         divisionRepository.delete(divisionId);
         Utilities.refresh(config.getValue("receiver_division_urls").split(","));
+    }
+
+    @Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = Exception.class, timeout = 30)
+    public void updateDivisionVendorMapping(final String divisionId, final Set<Integer> vendorNameSet) {
+        final Division division = divisionRepository.findOne(divisionId);
+        if (division == null) {
+            throw new IllegalArgumentException("This Division Name Does not exists [ " + divisionId + " ] ");
+        }
+        final Set<Vendor> vendorList = new HashSet<>();
+        for (final int vendorId : vendorNameSet) {
+            vendorList.add(vendorRepository.findOne(vendorId));
+        }
+        division.setVendorSet(vendorList);
+        divisionRepository.saveAndFlush(division);
     }
 }

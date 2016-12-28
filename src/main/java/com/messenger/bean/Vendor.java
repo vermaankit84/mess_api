@@ -7,6 +7,8 @@ import com.messenger.types.VendorType;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 @JsonAutoDetect
 @Entity
@@ -43,6 +45,9 @@ public class Vendor implements Serializable {
 
     @Column(name = "VENDORCREDENTIALS", length = 45)
     private String vendorCredentials = null;
+
+    @ManyToMany(fetch = FetchType.EAGER, mappedBy = "vendorSet")
+    private Set<Division> divisionSet = new HashSet<>();
 
     public int getId() {
         return id;
@@ -116,8 +121,27 @@ public class Vendor implements Serializable {
         this.vendorCredentials = vendorCredentials;
     }
 
+    public Set<Division> getDivisionSet() {
+        return divisionSet;
+    }
+
+    public void setDivisionSet(Set<Division> divisionSet) {
+        this.divisionSet = divisionSet;
+    }
+
     @Override
     public String toString() {
-        return "Vendor{" + "id=" + id + ", vendorName='" + vendorName + '\'' + ", vendorOrigin=" + vendorOrigin + ", vendorType=" + vendorType + ", vendorUrl='" + vendorUrl + '\'' + ", vendorPriority=" + vendorPriority + ", vendorStatus=" + vendorStatus + ", vendorHeader='" + vendorHeader + '\'' + ", vendorCredentials='" + vendorCredentials + '\'' + '}';
+        return "Vendor{" +
+                "id=" + id +
+                ", vendorName='" + vendorName + '\'' +
+                ", vendorOrigin=" + vendorOrigin +
+                ", vendorType=" + vendorType +
+                ", vendorUrl='" + vendorUrl + '\'' +
+                ", vendorPriority=" + vendorPriority +
+                ", vendorStatus=" + vendorStatus +
+                ", vendorHeader='" + vendorHeader + '\'' +
+                ", vendorCredentials='" + vendorCredentials + '\'' +
+                ", divisionSet=" + divisionSet +
+                '}';
     }
 }
