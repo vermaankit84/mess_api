@@ -11,4 +11,6 @@ public interface TableConstants {
     String STR_MESSAGE_MIS_REC_LOG = "mis_rec_log";
     String STR_MESSAGE_MIS_SUB_LOG = "mis_sub_log";
     String STR_MESSENGER_USER = "mess_user_table";
+    String STR_BROADCAST_MASTER = "mess_brd_master";
+    String STR_BROADCAST_TEMP_TABLE = "mess_brd_temp_table";
 }

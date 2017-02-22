@@ -2,6 +2,7 @@ package com.messenger.service;
 
 import com.messenger.bean.Vendor;
 import com.messenger.constants.CacheConstants;
+import com.messenger.constants.MessConstants;
 import com.messenger.property.Config;
 import com.messenger.repository.VendorRepository;
 import com.messenger.util.Utilities;
@@ -56,7 +57,7 @@ public class VendorService {
     @Transactional(propagation = Propagation.REQUIRED, readOnly = true)
     @Cacheable(cacheNames = CacheConstants.STR_VENDOR_CACHE_CONSTANTS)
     public List<Vendor> getVendorDetails() {
-        return vendorRepository.findAll().parallelStream().filter(vendor -> vendor.getVendorStatus() == 1).collect(Collectors.toList());
+        return vendorRepository.findAll().parallelStream().filter(vendor -> vendor.getVendorStatus() == Integer.valueOf(MessConstants.STR_DEFAULT_ACTIVE_STATUS)).collect(Collectors.toList());
     }
 
     @Transactional(propagation = Propagation.REQUIRED)

@@ -22,13 +22,13 @@ public class BufferController {
     @RequestMapping(value = "/createBuffer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.POST)
     public
     @ResponseBody
-    ResponseEntity<String> createVendor(@RequestBody final Buffer buffer) {
+    ResponseEntity<String> createBuffer(@RequestBody final Buffer buffer) {
         logger.info("Buffer Details Obtained for Create [ " + buffer + " ] at [ " + Utilities.getLocalDateTime() + " ] ");
         ResponseEntity<String> responseEntity = null;
         try {
-            responseEntity = new ResponseEntity<String>("Buffer Has Been Created with Id [ " + bufferService.createBuffer(buffer).getId() + " ] ", HttpStatus.CREATED);
+            responseEntity = new ResponseEntity<>(Utilities.convertToJson(String.valueOf("Buffer has been saved with id " + bufferService.createBuffer(buffer).getId()), "createBuffer"), HttpStatus.CREATED);
         } catch (Exception e) {
-            responseEntity = new ResponseEntity<String>("exception arises while saving Vendor [ " + buffer + " ] exception details [" + e + " ] ", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>(Utilities.convertToJson("exception arises while creating buffer details [ " + buffer.getBufferTable() + " ] ", "createBuffer"), HttpStatus.INTERNAL_SERVER_ERROR);
             logger.warn("exception arises while saving buffer details [ " + buffer + " ] ", e);
         }
         return responseEntity;
@@ -38,14 +38,13 @@ public class BufferController {
     @RequestMapping(value = "/updateBuffer", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.PUT)
     public
     @ResponseBody
-    ResponseEntity<String> updateVendor(@RequestBody final Buffer buffer) {
+    ResponseEntity<Buffer> updateBuffer(@RequestBody final Buffer buffer) {
         logger.info("Buffer Details Obtained for Update [ " + buffer + " ] at [ " + Utilities.getLocalDateTime() + " ] ");
-        ResponseEntity<String> responseEntity = null;
+        ResponseEntity<Buffer> responseEntity = null;
         try {
-            bufferService.updateBuffer(buffer);
-            responseEntity = new ResponseEntity<String>("Buffer Has Been Updated with Id [ " + buffer.getId() + " ] ", HttpStatus.CREATED);
+            responseEntity = new ResponseEntity<>(bufferService.updateBuffer(buffer), HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            responseEntity = new ResponseEntity<String>("exception arises while saving Vendor [ " + buffer + " ] exception details [" + e + " ] ", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>((Buffer) null, HttpStatus.INTERNAL_SERVER_ERROR);
             logger.warn("exception arises while updating buffer details [ " + buffer + " ] ", e);
         }
         return responseEntity;
@@ -55,7 +54,9 @@ public class BufferController {
     public
     @ResponseBody
     ResponseEntity<List<Buffer>> getBufferDetails() {
-        return new ResponseEntity<>(bufferService.getBufferDetails(), HttpStatus.ACCEPTED);
+        final List<Buffer> bufferList = bufferService.getBufferDetails();
+        logger.info("Buffer Details obtained [ " + bufferList + " ] ");
+        return new ResponseEntity<>(bufferList, HttpStatus.ACCEPTED);
     }
 
     @RequestMapping(value = "/getBufferDetails/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)
@@ -68,8 +69,7 @@ public class BufferController {
     @RequestMapping(value = "/deleteBuffer/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.DELETE)
     public
     @ResponseBody
-    ResponseEntity<String> deleteBuffer(@PathVariable final int id) {
-        bufferService.deleteBuffer(id);
-        return new ResponseEntity<>("Buffer with id [ " + id + " ] has been deleted successfully ", HttpStatus.ACCEPTED);
+    ResponseEntity<Buffer> deleteBuffer(@PathVariable final int id) {
+        return new ResponseEntity<>(bufferService.deleteBuffer(id), HttpStatus.ACCEPTED);
     }
 }

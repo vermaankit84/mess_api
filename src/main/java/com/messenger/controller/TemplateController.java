@@ -26,9 +26,9 @@ public class TemplateController {
         logger.info("Template Details Obtained [ " + template + " ] at [ " + Utilities.getLocalDateTime() + " ] ");
         ResponseEntity<String> responseEntity = null;
         try {
-            responseEntity = new ResponseEntity<String>("Template Has Been Created with Id [ " + templateService.createTemplate(template).getId() + " ] ", HttpStatus.CREATED);
+            responseEntity = new ResponseEntity<>("Template Has Been Created with Id [ " + templateService.createTemplate(template).getId() + " ] ", HttpStatus.CREATED);
         } catch (Exception e) {
-            responseEntity = new ResponseEntity<String>("exception arises while saving Template [ " + template + " ] exception details [" + e + " ] ", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>("exception arises while saving Template [ " + template + " ] exception details [" + e + " ] ", HttpStatus.BAD_REQUEST);
             logger.warn("exception arises while saving Vendor [ " + template + " ] ", e);
         }
         return responseEntity;
@@ -42,9 +42,9 @@ public class TemplateController {
         ResponseEntity<String> responseEntity = null;
         try {
             templateService.updateTemplate(template);
-            responseEntity = new ResponseEntity<String>("Template details [ " + template.getId() + " ] has been updated successfully", HttpStatus.ACCEPTED);
+            responseEntity = new ResponseEntity<>("Template details [ " + template.getId() + " ] has been updated successfully", HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            responseEntity = new ResponseEntity<String>("exception arises while updating template [ " + template + " ] exception details [" + e + " ] ", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>("exception arises while updating template [ " + template + " ] exception details [" + e + " ] ", HttpStatus.BAD_REQUEST);
             logger.warn("exception arises while saving template [ " + template + " ] ", e);
         }
         return responseEntity;
