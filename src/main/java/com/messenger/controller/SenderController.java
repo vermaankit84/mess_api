@@ -34,9 +34,9 @@ public class SenderController {
         ResponseEntity<String> responseEntity = null;
         try {
             senderService.updateSender(sender);
-            responseEntity = new ResponseEntity<String>("Division will has been updated with [ " + sender.getSenderName() + " ] ", HttpStatus.ACCEPTED);
+            responseEntity = new ResponseEntity<>("Division will has been updated with [ " + sender.getSenderName() + " ] ", HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            responseEntity = new ResponseEntity<String>("exception arises while saving Division [ " + sender.getSenderName() + " ] exception details [" + e + " ] ", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>("exception arises while saving Division [ " + sender.getSenderName() + " ] exception details [" + e + " ] ", HttpStatus.BAD_REQUEST);
             logger.warn("exception arises while saving Vendor [ " + sender.getSenderName() + " ] ", e);
         }
         return responseEntity;
@@ -54,7 +54,7 @@ public class SenderController {
     public
     @ResponseBody
     ResponseEntity<Sender> getSenderDetails(@PathVariable int id) {
-        return new ResponseEntity<>(senderService.getSenderList(id), HttpStatus.FOUND);
+        return new ResponseEntity<>(senderService.getSender(id), HttpStatus.FOUND);
     }
 
     @RequestMapping(value = "/deleteSender/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.GET)

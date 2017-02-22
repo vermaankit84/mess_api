@@ -11,11 +11,14 @@ jar {
     version = '0.1.0'
 }
 
+mainClassName = "main.StartApplication"
+
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
+
 dependencies {
-    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.4.2.RELEASE'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-web', version: '1.4.3.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-actuator', version: '1.4.2.RELEASE'
     compile group: 'org.springframework.boot', name: 'spring-boot-starter-data-jpa', version: '1.4.2.RELEASE'
     compile group: 'org.springframework.security', name: 'spring-security-core', version: '4.2.0.RELEASE'
@@ -24,6 +27,12 @@ dependencies {
     compile group: 'org.springframework.security', name: 'spring-security-web', version: '4.2.0.RELEASE'
     compile group: 'org.springframework', name: 'spring-context-support', version: '4.3.5.RELEASE'
     compile group: 'org.springframework', name: 'spring-context', version: '4.3.5.RELEASE'
+    compile group: 'org.apache.tomcat.embed', name: 'tomcat-embed-jasper', version: '8.5.9'
+    compile group: 'org.springframework.boot', name: 'spring-boot-starter-tomcat', version: '1.4.3.RELEASE'
+    compile group: 'org.hibernate', name: 'hibernate-validator', version: '5.3.1.Final'
+    compile group: 'com.googlecode.json-simple', name: 'json-simple', version: '1.1.1'
+    compile group: 'org.webjars', name: 'angularjs', version: '1.6.0'
+    compile group: 'org.webjars', name: 'bootstrap', version: '3.3.7-1'
     compile group: 'net.sf.ehcache', name: 'ehcache', version: '2.10.3'
     compile group: 'org.apache.httpcomponents', name: 'httpclient', version: '4.5.2'
     compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.5'

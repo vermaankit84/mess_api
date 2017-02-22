@@ -26,9 +26,9 @@ public class VendorController {
         logger.info("Vendor Details Obtained for [ " + vendor + " ] at [ " + Utilities.getLocalDateTime() + " ] ");
         ResponseEntity<String> responseEntity = null;
         try {
-            responseEntity = new ResponseEntity<String>("Vendor Has Been Created with Id [ " + vendorService.createVendor(vendor).getId() + " ] ", HttpStatus.CREATED);
+            responseEntity = new ResponseEntity<>("Vendor Has Been Created with Id [ " + vendorService.createVendor(vendor).getId() + " ] ", HttpStatus.CREATED);
         } catch (Exception e) {
-            responseEntity = new ResponseEntity<String>("exception arises while saving Vendor [ " + vendor + " ] exception details [" + e + " ] ", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>("exception arises while saving Vendor [ " + vendor + " ] exception details [" + e + " ] ", HttpStatus.BAD_REQUEST);
             logger.warn("exception arises while saving Vendor [ " + vendor + " ] ", e);
         }
         return responseEntity;
@@ -42,9 +42,9 @@ public class VendorController {
         ResponseEntity<String> responseEntity = null;
         try {
             vendorService.updateVendor(vendor);
-            responseEntity = new ResponseEntity<String>("Vendor details [ " + vendor.getId() + " ] has been updated successfully", HttpStatus.ACCEPTED);
+            responseEntity = new ResponseEntity<>("Vendor details [ " + vendor.getId() + " ] has been updated successfully", HttpStatus.ACCEPTED);
         } catch (Exception e) {
-            responseEntity = new ResponseEntity<String>("exception arises while updating Vendor [ " + vendor + " ] exception details [" + e + " ] ", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>("exception arises while updating Vendor [ " + vendor + " ] exception details [" + e + " ] ", HttpStatus.BAD_REQUEST);
             logger.warn("exception arises while saving Vendor [ " + vendor + " ] ", e);
         }
         return responseEntity;
@@ -54,7 +54,7 @@ public class VendorController {
     public
     @ResponseBody
     ResponseEntity<List<Vendor>> getVendorDetails() {
-        return new ResponseEntity<List<Vendor>>(vendorService.getVendorDetails(), HttpStatus.FOUND);
+        return new ResponseEntity<>(vendorService.getVendorDetails(), HttpStatus.FOUND);
     }
 
     @RequestMapping(value = "/deleteVendors/{id}", produces = MediaType.APPLICATION_JSON_VALUE, method = RequestMethod.DELETE)
@@ -66,7 +66,7 @@ public class VendorController {
             vendorService.delete(id);
             responseEntity = new ResponseEntity<>("Vendor with id [ " + id + " ] deleted successfully", HttpStatus.CREATED);
         } catch (Exception e) {
-            responseEntity = new ResponseEntity<String>("exception arises while delete Vendor [ " + id + " ] exception details [" + e + " ] ", HttpStatus.BAD_REQUEST);
+            responseEntity = new ResponseEntity<>("exception arises while delete Vendor [ " + id + " ] exception details [" + e + " ] ", HttpStatus.BAD_REQUEST);
             logger.warn("exception arises while delete Vendor [ " + id + " ] ", e);
         }
         return responseEntity;

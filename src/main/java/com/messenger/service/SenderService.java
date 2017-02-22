@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class SenderService {
@@ -34,8 +35,14 @@ public class SenderService {
 
     @Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class, timeout = 30, readOnly = true)
     @Cacheable(cacheNames = CacheConstants.STR_SENDER_CACHE_CONSTANTS, key = "#senderId")
-    public Sender getSenderList(final int senderId) {
+    public Sender getSender(final int senderId) {
         return senderRepository.findOne(senderId);
+    }
+
+    @Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class, timeout = 30, readOnly = true)
+    @Cacheable(cacheNames = CacheConstants.STR_SENDER_CACHE_CONSTANTS, key = "#senderName")
+    public List<Sender> getSenderName(final String senderName) {
+        return senderRepository.findAll().parallelStream().filter(s -> s.getSenderName().equals(senderName)).collect(Collectors.toList());
     }
 
     @Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class, timeout = 30)
