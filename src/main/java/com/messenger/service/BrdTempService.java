@@ -5,6 +5,7 @@ import com.messenger.constants.CacheConstants;
 import com.messenger.repository.BrdTempRepository;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class BrdTempService {
     @CachePut(value = CacheConstants.STR_BUFFER_CACHE_CONSTANTS, key = "#brdId")
     public void insertBroadcastTempDetails(final String filePath , final String brdId) throws Exception {
         final List<BroadcastTemp> brdTempList = new ArrayList<>();
-        String[] data = new String(Files.readAllBytes(Paths.get(filePath)), "UTF-8").split("\n");
+        String[] data  = new String(Files.readAllBytes(Paths.get("message.txt")), "UTF-8").split("\n");
         int counter = 0;
         for (final String d : data) {
             String [] messData = d.split(",");
@@ -61,6 +62,7 @@ public class BrdTempService {
     public BroadcastTemp getBroadCastDetail(final int msgId) throws Exception {
         return brdTempRepository.findOne(msgId);
     }
+
 
     @Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class, timeout = 30)
     @CachePut(value = CacheConstants.STR_BUFFER_CACHE_CONSTANTS, key = "#brdTemp.messageId")

@@ -51,6 +51,10 @@ public class BroadcastService {
             throw new IllegalArgumentException("Sender Id [ " + broadcastRequest.getSender() + " ]  does not exists");
         }
         final VendorOrigin vendorOrigin = VendorOrigin.valueOf(broadcastRequest.getVendorOrigin());
+
+        if (vendorOrigin == null) {
+            throw new IllegalArgumentException("Vendor Origin [ " + broadcastRequest.getVendorOrigin() + " ]  does not exists");
+        }
         final Broadcast broadcast = new Broadcast();
         broadcast.setDivision(division);
         broadcast.setScheduledDate(broadcastRequest.getScheduledDate());
@@ -132,6 +136,7 @@ public class BroadcastService {
         return broadcastRequestList;
     }
 
+
     @Transactional(propagation = Propagation.REQUIRED, noRollbackFor = Exception.class, timeout = 30)
     @Cacheable(cacheNames = CacheConstants.STR_BROADCAST_CACHE_CONSTANTS)
     public List<BroadcastRequest> getBroadcastRequestBasedOnVendorOrigin(final String vendorOrigin) throws Exception  {
@@ -158,6 +163,7 @@ public class BroadcastService {
         }
         return broadcastRequestList;
     }
+
 
     @Transactional(propagation = Propagation.REQUIRES_NEW, noRollbackFor = Exception.class, timeout = 30)
     @CacheEvict(value = CacheConstants.STR_BROADCAST_CACHE_CONSTANTS, allEntries = true, key = "#broadcastRequest.brdId")
